@@ -1,0 +1,107 @@
+<%
+' 工具对象,包括一些常用函数
+'
+' @package    asplite
+' @author     ice_berg16(寻梦的稻草人)
+' @copyright  ice_berg16@163.com
+' @version    $Id$
+
+'全局变量，ADODB连接对象
+Dim Conn
+
+'数据库连接函数
+Function initDB()
+	str = ""
+	If Config.dbDriver = "access" Then 
+		str = "Provider = Microsoft.Jet.OLEDB.4.0;Data Source =" & Config.dbPath
+	ElseIf Config.dbDriver = "sqlserver" Then
+		str = "PROVIDER=SQLOLEDB.1;Data Source="&Config.dbHost&";Initial Catalog="&Config.dbName&";Persist Security Info=True;User ID="&Config.dbUser&";Password="&Config.dbPassword&";Connect Timeout=30"
+	End If
+	If str = "" Then halt("数据库连接语句为空")
+	Set Conn = Server.CreateObject("ADODB.Connection")
+	on error resume next
+	Conn.open str
+	If Err Then
+		System.halt("对不起，数据连接错误！<br/>" & Err.description)
+	End If
+End Function
+
+'判断index是否在数组arr中
+Function inArray(arr, index)
+	Dim find
+	find = false
+	For Each v In arr
+		If v = index Then
+			find  = true
+			Exit For			
+		End If 
+	Next
+	inArray = find
+End Function
+
+'取得整数值
+Function getInt(v)
+	If Not IsNumeric(v) Then v = 0
+	getInt = CInt(v)
+End Function
+
+'集合转换
+Function Collection(col)
+	Set Collection = server.CreateObject("Scripting.Dictionary")
+	If Not IsObject(col) Then
+		Exit Function
+	End if
+	For Each i In col
+		Collection.add i, col(i)
+	Next
+End Function
+
+'打印变量,不能打印多维数组
+Function dump(var,key, deep)
+	If Not IsNull(key) Then response.write String(deep,vbTab) & key &" => "
+	If IsObject(var)Then 
+		Response.write "(" & vbCrLf
+		For Each i In var
+			dump var(i), i, deep+1
+		Next
+		Response.write String(deep,vbTab) & ")" & vbCrlf
+	ElseIf IsArray(var) Then 
+		Response.write "(" & vbCrLf
+		cnt = UBound(var)
+		For i = 0 To cnt
+			dump var(i), i, deep+1
+		Next 
+		Response.write String(deep,vbTab) & ")" & vbCrlf
+	Else
+		response.write var &"("& TypeName(var) &")" & vbCrlf
+	End If
+End Function
+
+'新建一个fSO对象
+Function newFS()
+	Set newFS = server.CreateObject("Scripting.FileSystemObject")
+End Function 
+
+'新建一个集合
+Function newCol()
+	Set newCol = server.CreateObject("Scripting.Dictionary")
+End Function
+
+'新建一个rs对象
+Function newRS()
+	'如果没有连接数据库，自动连接
+	If Not IsObject(Conn) Then initDB()
+	Set newRS = server.CreateObject("adodb.recordset")
+End Function 
+
+'生成一个model对象
+Function model(tblName)
+	Set model = new Model_
+	model.table = Config.tablePre & tblName
+	Set schema = Conn.OpenSchema(28,Array(empty,empty,model.table))
+	If schema.eof And schema.bof Then System.halt("表 "&model.table& " 不存在")
+	model.PK = schema("column_name")
+	schema.close
+	Set schema = nothing
+End Function
+%>
