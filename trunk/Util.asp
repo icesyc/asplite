@@ -56,26 +56,47 @@ Function Collection(col)
 	Next
 End Function
 
-'打印变量,不能打印多维数组
-Function dump(var,key, deep)
+'打印变量,用于内部递归
+Function dump_(var,key, deep)
 	If Not IsNull(key) Then response.write String(deep,vbTab) & key &" => "
 	If IsObject(var)Then 
 		Response.write "(" & vbCrLf
 		For Each i In var
-			dump var(i), i, deep+1
+			dump_ var(i), i, deep+1
 		Next
 		Response.write String(deep,vbTab) & ")" & vbCrlf
 	ElseIf IsArray(var) Then 
 		Response.write "(" & vbCrLf
 		cnt = UBound(var)
 		For i = 0 To cnt
-			dump var(i), i, deep+1
+			dump_ var(i), i, deep+1
 		Next 
 		Response.write String(deep,vbTab) & ")" & vbCrlf
 	Else
-		response.write var &"("& TypeName(var) &")" & vbCrlf
+		response.write Server.HtmlEncode(var) &"("& TypeName(var) &")" & vbCrlf
 	End If
 End Function
+
+'打印变量,不能打印多维数组
+Function dump(var)
+	dump_ var, null, 0
+End Function
+
+'IIF ()函数 三元判断符 
+Public Function IIF(expression, vTrue, vFalse)
+	If expression Then IIF = vTrue Else IIF = vFalse
+End Function
+
+'ecoh 方法 代替（Response.write 方法）
+Public Sub echo(str)
+	Response.write str
+End Sub
+
+'halt 方法 代替 (Response.End 方法)
+Public Sub halt(strStr)
+	If strStr <> "" Then echo strStr & "<br />"
+	Response.End
+End Sub
 
 '新建一个fSO对象
 Function newFS()
@@ -101,6 +122,24 @@ Function model(tblName)
 	Set schema = Conn.OpenSchema(28,Array(empty,empty,model.table))
 	If schema.eof And schema.bof Then System.halt("表 "&model.table& " 不存在")
 	model.PK = schema("column_name")
+	schema.close
+	Set schema = nothing
+End Function
+
+'生成一个模板对象
+Function view(filePath)
+	Set view = new Template
+	view.dir = Config.viewPath
+	view.setFile filePath
+End Function
+
+'返回一个tree对象
+Function tree(tblName)
+	Set tree = new Tree_
+	tree.table = Config.tablePre & tblName
+	Set schema = Conn.OpenSchema(28,Array(empty,empty,tree.table))
+	If schema.eof And schema.bof Then System.halt("表 "&tree.table& " 不存在")
+	tree.PK = schema("column_name")
 	schema.close
 	Set schema = nothing
 End Function

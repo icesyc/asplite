@@ -58,17 +58,20 @@ Class Config_
 	'前台分页样式
 	Public fpagerFormat
 
+	'视图模板的路径
+	Public viewPath
+
 	Private Sub Class_Initialize
 		appRoot				= ""
-		dbPath				= Server.MapPath(appRoot & "/core/db/webapp.mdb")
+		dbPath				= Server.MapPath(appRoot & "/asplite/db/webapp.mdb")
 		dbDriver			= "access"
 		urlCommand			= "act"
 		sessionTime			= 30
+		viewPath			= Server.MapPath(appRoot & "/view")
 		appName				= "asp程序"
 		defaultAction		= "default"
 		tablePre			= "ice_"
 		pageActList			= "default,add,update,delete"
-		thumbPath			= appRoot & "/thumb"
 		pagerFormat			= "Pages: <span class=""red"">[current]</span>/<span class=""red"">[total]</span> "&_
 							  "Total: <span class=""red"">[recordCount]</span> "&_
 							  "[prev]&lt;[/prev] "&_

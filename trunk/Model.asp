@@ -39,7 +39,7 @@ Class Model_
 	' @param data Dictionary对象
 	Public Function save(data)
 		If Not IsObject(data) Then System.halt("model.save : 参数必须是一个集合")
-		If data(PK) <> "" Then 
+		If data.Item(PK) <> "" Then 
 			save = update(data)
 		Else
 			save = create(data)
@@ -53,7 +53,8 @@ Class Model_
 		rs.open table,Conn,1,3
 		rs.addNew
 		For Each f In rs.Fields
-			If f.Name <> PK And data.exists(f.Name) Then rs(f.Name) = data(f.name)
+			If f.name = "created" Or f.name = "updated" Then rs(f.name) = now
+			If f.name <> PK And data.exists(f.name) Then rs(f.name) = data.Item(f.name)
 		Next
 		rs.update
 		rs.close
@@ -63,9 +64,10 @@ Class Model_
 	' @param data Dictionary对象
 	Public Function update(data)	
 		If Not IsObject(data) Then System.halt("model.save : 参数必须是一个集合")
-		rs.open "select * from "& table &" where "& PK &"="& data(PK),Conn,1,3
+		rs.open "select * from "& table &" where "& PK &"="& data.Item(PK),Conn,1,3
 		For Each f In rs.Fields			
-			If f.Name <> PK And data.exists(f.Name) Then rs(f.Name) = data(f.name)
+			If f.name = "updated" Then rs(f.name) = now
+			If f.name <> PK And data.exists(f.name) Then rs(f.name) = data.Item(f.name)
 		Next
 		rs.update
 		rs.close
@@ -80,7 +82,7 @@ Class Model_
 
 	'返回一个记录集,没有查到则返回一个空集
 	Public Function findAll(where, fields, order, page, limit)
-		Dim sql
+		Dim sql,tmp,lmt,i
 		If IsNumeric(where) Then
 			where = PK &"="& where
 		ElseIf IsArray(where) Then 
@@ -120,7 +122,7 @@ Class Model_
 	'返回一条记录,没有查到则返回一个空集
 	Public Function find(where, fields, order)
 		Set find = findAll(where, fields, order, null, 1)
-		If find.exist(0) Then Set find = find.exists(0)
+		If find.exists(0) Then Set find = find.exists(0)
 	End Function 
 
 	'查找条件记录总数
@@ -175,6 +177,7 @@ Class Model_
 
 	'将RS对象转换成
 	Private Function rs2col(rs)
+		Dim i
 		Set rs2col = server.CreateObject("Scripting.Dictionary")
 		If Not rs.eof Then
 			For Each i In rs.fields
