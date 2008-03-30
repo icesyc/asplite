@@ -6,8 +6,9 @@
 %>
 <!-- #include file="Config.asp" -->
 <!-- #include file="System.asp" -->
-<!-- #include file="Util.asp" -->
 <!-- #include file="Model.asp" -->
+<!-- #include file="Template.asp" -->
+<!-- #include file="Util.asp" -->
 <%
 Private Function sqlCheck(ByVal Str)
 	sqlCheck = 0
@@ -49,35 +50,4 @@ Private Function sqlCheck(ByVal Str)
 End Function
 
 Call sqlCheck(Request.ServerVariables("QUERY_STRING"))
-
-'IIF ()函数 三元判断符 
-Public Function IIF(expression, vTrue, vFalse)
-	If expression Then IIF = vTrue Else IIF = vFalse
-End Function
-
-'ecoh 方法 代替（Response.write 方法）
-Public Sub echo(str)
-	Response.write str
-End Sub
-
-'halt 方法 代替 (Response.End 方法)
-Public Sub halt(strStr)
-	If strStr <> "" Then echo strStr & "<br />"
-	Response.End
-End Sub
-
-'Go方法 替代（Response.Redirect 事件）
-Public Sub go(str)
-	Response.Redirect str
-End Sub
-
-'RQ 替代 Request.QueryString 
-Public Function RQ(obj)
-	RQ = Request.QueryString(obj)
-End Function
-
-'RF 替代 Request.Form 
-Public Function RF(obj)
-	RF = Request.Form(obj)
-End Function
 %>
