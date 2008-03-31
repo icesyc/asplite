@@ -63,15 +63,15 @@ Class Config_
 
 	Private Sub Class_Initialize
 		appRoot				= ""
-		dbPath				= Server.MapPath(appRoot & "/asplite/db/webapp.mdb")
+		dbPath				= Server.MapPath(appRoot & "/system/asplite/db/webapp.mdb")
 		dbDriver			= "access"
 		urlCommand			= "act"
 		sessionTime			= 30
-		viewPath			= Server.MapPath(appRoot & "/view")
+		viewPath			= Server.MapPath(appRoot & "/system/view")
 		appName				= "asp程序"
 		defaultAction		= "default"
 		tablePre			= "ice_"
-		pageActList			= "default,add,update,delete"
+		pageActList			= "default,save,delete"
 		pagerFormat			= "Pages: <span class=""red"">[current]</span>/<span class=""red"">[total]</span> "&_
 							  "Total: <span class=""red"">[recordCount]</span> "&_
 							  "[prev]&lt;[/prev] "&_
@@ -82,5 +82,6 @@ Class Config_
 End Class
 
 '类的实例化
+Dim Config
 Set Config = new Config_
 %>

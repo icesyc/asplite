@@ -46,7 +46,7 @@ Private Function sqlCheck(ByVal Str)
 	Str=Replace(Str,chr(43),"")            '过滤SQL注入+
 	Str=Replace(Str,"{","")            '过滤SQL注入{
 	Str=Replace(Str,"}","")            '过滤SQL注入}
-	If sqlCheck <> 0 Then Throw()
+	If sqlCheck <> 0 Then Response.End
 End Function
 
 Call sqlCheck(Request.ServerVariables("QUERY_STRING"))

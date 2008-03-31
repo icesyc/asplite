@@ -104,8 +104,12 @@ Class Template
 		Dim res
 		res = tpl
 		'如果要解析的块变量不存在，清除本区域
-		If Not IsObject(stack) Or TypeName(stack) = "Nothing" Or TypeName(stack) = "Empty" Then
-			res = ""
+		If TypeName(stack) <> "Dictionary" Then
+			parseBlock = res
+			Exit Function
+		End If
+		If stack.Count = 0 Then
+			parseBlock = res
 			Exit Function
 		End If
 
@@ -120,16 +124,16 @@ Class Template
 			replacement = ""
 			Set obj = getStackObj(k, stack, false)
 			'确保变量存在
-			If TypeName(obj) <> "Nothing" Then 		
+			If TypeName(obj) <> "Nothing" Then
 				If reg.test(block) Then '递归处理
 					block = parseBlock(block, obj)
 				End If
 				'进行本层的替换
 				reg.Pattern = "\{([a-zA-Z0-9_.]+)\}"		
 				Set matches2 = reg.Execute(block)
-				If IsObject(obj) Then 
+				If TypeName(stack) = "Dictionary" Then
 					If obj.exists(0) Then '二维集合
-						If IsObject(obj.Item(0)) Then
+						If TypeName(obj.Item(0)) = "Dictionary" Then
 							For Each k2 In obj
 								replacement = replacement & replaceMatch(block, obj.Item(k2), matches2)	
 							Next 
@@ -178,8 +182,8 @@ Class Template
 		'是取值还是取键?
 		If value = false Then 
 			'保证键值必须是一个对象
-			If Not IsObject(getStackObj.Item(k)) Then 
-				e "Template.getStackObj : 变量 "& okey &" 不是一个对象", False
+			If TypeName(getStackObj.Item(k)) <> "Dictionary" Then 
+				e "Template.getStackObj : 变量 "& okey &" 不是一个Dictionary对象", False
 				Set getStackObj = nothing
 			Else			
 				Set getStackObj = getStackObj.Item(k)
@@ -191,6 +195,7 @@ Class Template
 	' 输出
 	Public Sub display
 		response.write parse()
+		response.End
 	End Sub
 
 	' @access Private

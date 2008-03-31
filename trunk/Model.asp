@@ -38,9 +38,9 @@ Class Model_
 	' 实现添加或更新
 	' @param data Dictionary对象
 	Public Function save(data)
-		If Not IsObject(data) Then System.halt("model.save : 参数必须是一个集合")
-		If data.Item(PK) <> "" Then 
-			save = update(data)
+		If typeName(data) <> "Dictionary" Then System.halt("model.save : 参数必须是一个集合")
+		If data.exists(PK) Then 
+			If data.Item(PK) <> "" Then save = update(data)
 		Else
 			save = create(data)
 		End If
@@ -49,7 +49,7 @@ Class Model_
 	' 创建新记录
 	' @param data Dictionary对象
 	Public Function create(data)
-		If Not IsObject(data) Then System.halt("model.save : 参数必须是一个集合")
+		If typeName(data) <> "Dictionary" Then System.halt("model.save : 参数必须是一个集合")
 		rs.open table,Conn,1,3
 		rs.addNew
 		For Each f In rs.Fields
@@ -63,7 +63,7 @@ Class Model_
 	' 更新记录
 	' @param data Dictionary对象
 	Public Function update(data)	
-		If Not IsObject(data) Then System.halt("model.save : 参数必须是一个集合")
+		If typeName(data) <> "Dictionary" Then System.halt("model.save : 参数必须是一个集合")
 		rs.open "select * from "& table &" where "& PK &"="& data.Item(PK),Conn,1,3
 		For Each f In rs.Fields			
 			If f.name = "updated" Then rs(f.name) = now
@@ -79,6 +79,22 @@ Class Model_
 		delete = deleteByField(PK, value)
 	End Function
 	
+
+	'根据主键取得一条记录
+	Public Function getRow(id)
+		Dim sql,f
+		If Not IsNumeric(id) Then id = 0
+		sql = "select * from "&table&" where "&PK&" ="&id
+		rs.open sql, Conn, 1, 1
+		Set getRow = rs2col(rs)
+		'如果主键不存在，则创建一个空的记录
+		If getRow.Count = 0 Then 
+			For Each f In rs.Fields
+				getRow.add f.name, ""
+			Next
+		End If
+		rs.close
+	End Function
 
 	'返回一个记录集,没有查到则返回一个空集
 	Public Function findAll(where, fields, order, page, limit)
@@ -122,7 +138,7 @@ Class Model_
 	'返回一条记录,没有查到则返回一个空集
 	Public Function find(where, fields, order)
 		Set find = findAll(where, fields, order, null, 1)
-		If find.exists(0) Then Set find = find.exists(0)
+		If find.exists(0) Then Set find = find.Item(0)
 	End Function 
 
 	'查找条件记录总数
@@ -144,6 +160,7 @@ Class Model_
 		debug_(sql)
 		rs.open sql, Conn, 1, 1
 		findCount = rs.fields("cnt").value
+		rs.close
 	End Function
 
 	'基于条件字段的删除

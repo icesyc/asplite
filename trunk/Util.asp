@@ -41,6 +41,7 @@ End Function
 
 '取得整数值
 Function getInt(v)
+	v = Trim(v)
 	If Not IsNumeric(v) Then v = 0
 	getInt = CInt(v)
 End Function
@@ -59,7 +60,21 @@ End Function
 '打印变量,用于内部递归
 Function dump_(var,key, deep)
 	If Not IsNull(key) Then response.write String(deep,vbTab) & key &" => "
-	If IsObject(var)Then 
+	If var Is Request Then 
+		response.write "不能遍历Request"
+		Exit Function
+	End If 
+	If TypeName(var) = "Recordset" Then 
+		Response.write "(" & vbCrLf
+		For Each i In var.Fields
+			dump_ i, null,deep+1
+		Next
+		Response.write String(deep,vbTab) & ")" & vbCrlf
+	ElseIf TypeName(var) = "Field" Then 
+		Response.write "(" & vbCrLf
+		dump_ var.Value, var.Name, deep+1
+		Response.write String(deep,vbTab) & ")" & vbCrlf
+	ElseIf IsObject(var) And TypeName(var) <> "IStringList" Then 
 		Response.write "(" & vbCrLf
 		For Each i In var
 			dump_ var(i), i, deep+1
@@ -143,4 +158,26 @@ Function tree(tblName)
 	schema.close
 	Set schema = nothing
 End Function
+
+'生成fckeditor内容
+Function editor(path, width, height, field)
+	Set e = new FCKeditor
+	e.basePath = "/fckeditor/"
+	e.width = "100%"
+	e.Height = 300
+	e.ToolbarSet = "Normal"
+	editor = e.CreateHtml("content")
+End Function
+
+Sub message(msg, msgType)
+	Set v = view("admin/"&msgType&".htm")
+	v.assign "message", msg
+	v.display
+	Set v = nothing
+End Sub
+
+Sub alert(msg)
+	response.write "<script type='text/javascript'>alert("""&msg&""");history.back()</script>"
+	resposne.End
+End Sub
 %>
