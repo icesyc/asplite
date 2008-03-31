@@ -47,6 +47,14 @@ Class System_
 			System.halt("Error: Œ¥’“µΩAction:" & act)
 		End If
 	End Sub
+
+	Public Sub Class_Terminate
+		If IsObject(Conn) Then 
+			Conn.close
+			Set Conn = nothing
+		End If
+		Set Config = Nothing
+	End Sub
 End Class
 
 Dim System
