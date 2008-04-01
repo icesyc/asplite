@@ -103,13 +103,14 @@ Class Template
 	Private Function parseBlock(Byval tpl, stack)
 		Dim res
 		res = tpl
-		'如果要解析的块变量不存在，清除本区域
-		If TypeName(stack) <> "Dictionary" Then
+		'如果要解析的块变量不是对象则返回
+		If TypeName(stack) <> "Dictionary"Then
 			parseBlock = res
 			Exit Function
 		End If
-		If stack.Count = 0 Then
-			parseBlock = res
+		'如果解析的变量不是顶级，并且没有对应的数据则清空此部分
+		If Not stack Is data And stack.Count = 0 Then
+			parseBlock = ""
 			Exit Function
 		End If
 
@@ -131,7 +132,7 @@ Class Template
 				'进行本层的替换
 				reg.Pattern = "\{([a-zA-Z0-9_.]+)\}"		
 				Set matches2 = reg.Execute(block)
-				If TypeName(stack) = "Dictionary" Then
+				If TypeName(obj) = "Dictionary" And obj.Count > 0 Then
 					If obj.exists(0) Then '二维集合
 						If TypeName(obj.Item(0)) = "Dictionary" Then
 							For Each k2 In obj

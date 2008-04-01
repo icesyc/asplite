@@ -40,7 +40,7 @@ Class Model_
 	Public Function save(data)
 		If typeName(data) <> "Dictionary" Then System.halt("model.save : 参数必须是一个集合")
 		If data.exists(PK) Then 
-			If data.Item(PK) <> "" Then save = update(data)
+			If data.Item(PK) <> "" Then save = update(data) Else save = create(data)
 		Else
 			save = create(data)
 		End If
@@ -79,9 +79,16 @@ Class Model_
 		delete = deleteByField(PK, value)
 	End Function
 	
+	'某个字段计数增加
+	'@param id 主键的记录值
+	'@param field 要增加的字段
+	Public Function increField(id, field)
+		sql = "update "&table&" set "&field&"="&field&"+1 where "&PK&"="&id
+		Conn.exec sql, increField
+	End Function
 
 	'根据主键取得一条记录
-	Public Function getRow(id)
+	Public Function getRow(ByVal id)
 		Dim sql,f
 		If Not IsNumeric(id) Then id = 0
 		sql = "select * from "&table&" where "&PK&" ="&id
@@ -97,7 +104,7 @@ Class Model_
 	End Function
 
 	'返回一个记录集,没有查到则返回一个空集
-	Public Function findAll(where, fields, order, page, limit)
+	Public Function findAll(ByVal where, ByVal fields, ByVal order, ByVal page, ByVal limit)
 		Dim sql,tmp,lmt,i
 		If IsNumeric(where) Then
 			where = PK &"="& where
@@ -136,13 +143,13 @@ Class Model_
 	End Function
 
 	'返回一条记录,没有查到则返回一个空集
-	Public Function find(where, fields, order)
+	Public Function find(ByVal where, ByVal fields, ByVal order)
 		Set find = findAll(where, fields, order, null, 1)
 		If find.exists(0) Then Set find = find.Item(0)
 	End Function 
 
 	'查找条件记录总数
-	Public Function findCount(where)
+	Public Function findCount(ByVal where)
 		Dim sql
 		If IsNumeric(where) Then
 			where = PK &"="& where
@@ -177,7 +184,7 @@ Class Model_
 	End Function
 
 	'用于sql的安全字符串
-	Public Function quote(v)
+	Public Function quote(ByVal v)
 		If IsArray(v) Then 
 			If Not IsNumeric(v(0)) Then 
 				Dim i,c
