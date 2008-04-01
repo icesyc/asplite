@@ -53,17 +53,13 @@ Function Collection(col)
 		Exit Function
 	End if
 	For Each i In col
-		Collection.add i, col(i)
+		Collection.add i, col.Item(i)
 	Next
 End Function
 
 '打印变量,用于内部递归
 Function dump_(var,key, deep)
 	If Not IsNull(key) Then response.write String(deep,vbTab) & key &" => "
-	If var Is Request Then 
-		response.write "不能遍历Request"
-		Exit Function
-	End If 
 	If TypeName(var) = "Recordset" Then 
 		Response.write "(" & vbCrLf
 		For Each i In var.Fields
@@ -160,13 +156,23 @@ Function tree(tblName)
 End Function
 
 '生成fckeditor内容
-Function editor(path, width, height, field)
+Function editor(width, height, field, value)
 	Set e = new FCKeditor
-	e.basePath = "/fckeditor/"
-	e.width = "100%"
-	e.Height = 300
+	e.basePath = Config.editorPath
+	e.width = width
+	e.Height = height
 	e.ToolbarSet = "Normal"
+	e.Value = value
 	editor = e.CreateHtml("content")
+End Function
+
+'生成一个分页对象
+Function pager(currentPage, recordCount, pageSize)
+	Set pager = new Pager_
+	pager.currentPage = currentPage
+	pager.recordCount = recordCount
+	pager.pageSize	  = pageSize
+	pager.formatStr	  = Config.pagerFormat
 End Function
 
 Sub message(msg, msgType)

@@ -6,7 +6,7 @@
 ' @copyright  ice_berg16@163.com
 ' @version    $Id$
 
-Class Pager
+Class Pager_
 	
 	'µ±Ç°Ò³Ãæ
 	Public currentPage

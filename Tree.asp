@@ -38,6 +38,22 @@ Class Tree_
 		End If
 	End Sub
 
+	Private Function createRoot
+		sql = "select * from "& table &" where parent_id=-1"		'
+		rs.open "select * from " & table &" where parent_id=-1", Conn, 1, 3
+		If rs.eof Then 
+			rs.addNew
+			rs.Fields("name") = "__ROOT_NODE__"
+			rs.Fields("left_value") = 1
+			rs.Fields("right_value") = 2
+			rs.Fields("parent_id") = -1
+			rs.Fields("deep") = 0
+			rs.update
+		End If
+		Set createRoot = rs2col(rs)
+		rs.close
+	End Function
+
 	' 添加或更新节点
 	' @param data Dictionary对象
 	Public Function save(data)
@@ -53,29 +69,20 @@ Class Tree_
 	' @param data Dictionary对象
 	Public Function create(data)
 		Dim sql, parent
-		If Not IsObject(data) Then System.halt("model.save : 参数必须是一个集合")
+		If typeName(data) <> "Dictionary" Then System.halt("model.save : 参数必须是一个集合")
 		If data.exists("parent_id") Then 
 			If IsNumeric(data.Item("parent_id")) Then 
 				rs.open "select * from " &table& " where id="&data.Item("parent_id"), Conn, 1, 1
 				If rs.eof Then System.halt("Tree.create : id为"&data.Item("parent_id")&"的结点不存在")
 				Set parent = rs2col(rs)
 				rs.close
+			Else
+				'查看顶级节点是否存在，不存在则创建
+				Set parent = createRoot
 			End If
 		Else
 			'查看顶级节点是否存在，不存在则创建
-			sql = "select * from "& table &" where parent_id=-1"		'
-			rs.open "select * from " & table &" where parent_id=-1", Conn, 1, 3
-			If rs.eof Then 
-				rs.addNew
-				rs.Fields("name") = "__ROOT_NODE__"
-				rs.Fields("left_value") = 1
-				rs.Fields("right_value") = 2
-				rs.Fields("parent_id") = -1
-				rs.Fields("deep") = 0
-				rs.update
-			End If
-			Set parent = rs2col(rs)
-			rs.close
+			Set parent = createRoot
 		End If
 		
 		'更新左右节点
@@ -126,7 +133,7 @@ Class Tree_
 	'返回节点的路径
 	Public Function getPath(node)
 		Dim sql, i
-		If Not IsObject(node) Then Set node = getNode(node)
+		If typeName(node) <> "Dictionary" Then Set node = getNode(node)
 		sql = "select * from "&table&" where left_value<"&node.Item("left_value")&" and right_value>"&node.Item("right_value")&" and parent_id<>-1 order by left_value"
 		rs.open sql, Conn, 1, 1
 		Set getPath = server.CreateObject("Scripting.Dictionary")
@@ -166,7 +173,7 @@ Class Tree_
 	'取得以某个节点为根的子树
 	Public Function getSubTree(node)
 		Dim sql, i
-		If Not IsObject(node) Then Set node = getNode(node)
+		If typeName(node) <> "Dictionary" Then Set node = getNode(node)
 		sql = "select * from "&table&" where left_value between "&node.Item("left_value")&" and "&node.Item("right_value")&" order by left_value"
 		rs.open sql, Conn, 1, 1
 		Set getSubTree = server.CreateObject("Scripting.Dictionary")
