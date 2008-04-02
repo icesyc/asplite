@@ -201,11 +201,13 @@ Class Model_
 
 	'将RS对象转换成
 	Private Function rs2col(rs)
-		Dim i
+		Dim i,v
 		Set rs2col = server.CreateObject("Scripting.Dictionary")
 		If Not rs.eof Then
 			For Each i In rs.fields
-				rs2col.add i.name, i.value
+				'防止出现Null值
+				v = IIF(IsNull(i.value), "", i.value)
+				rs2col.add i.name, v
 			Next
 		End If
 	End Function

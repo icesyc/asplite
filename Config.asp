@@ -64,6 +64,9 @@ Class Config_
 	'编辑器的路径
 	Public editorPath
 
+	'用户文件路径,fckeditor的上传文件位置
+	Public userfiles
+
 	Private Sub Class_Initialize
 		appRoot				= ""
 		dbPath				= Server.MapPath(appRoot & "/system/asplite/db/webapp.mdb")
@@ -72,6 +75,7 @@ Class Config_
 		sessionTime			= 30
 		viewPath			= Server.MapPath(appRoot & "/system/view")
 		editorPath			= appRoot & "/system/fckeditor/"
+		userfiles			= appRoot & "/userfiles/"
 		appName				= "asp程序"
 		defaultAction		= "default"
 		tablePre			= "ice_"

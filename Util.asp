@@ -98,7 +98,7 @@ Public Function IIF(expression, vTrue, vFalse)
 	If expression Then IIF = vTrue Else IIF = vFalse
 End Function
 
-'ecoh 方法 代替（Response.write 方法）
+'echo 方法 代替（Response.write 方法）
 Public Sub echo(str)
 	Response.write str
 End Sub
@@ -126,7 +126,7 @@ Function newRS()
 	Set newRS = server.CreateObject("adodb.recordset")
 End Function 
 
-'生成一个model对象
+'新建一个model对象
 Function model(tblName)
 	Set model = new Model_
 	model.table = Config.tablePre & tblName
@@ -137,14 +137,14 @@ Function model(tblName)
 	Set schema = nothing
 End Function
 
-'生成一个模板对象
+'新建一个模板对象
 Function view(filePath)
 	Set view = new Template
 	view.dir = Config.viewPath
 	view.setFile filePath
 End Function
 
-'返回一个tree对象
+'新建一个tree对象
 Function tree(tblName)
 	Set tree = new Tree_
 	tree.table = Config.tablePre & tblName
@@ -175,6 +175,7 @@ Function pager(currentPage, recordCount, pageSize)
 	pager.formatStr	  = Config.pagerFormat
 End Function
 
+'使用模板的消息显示
 Sub message(msg, msgType)
 	Set v = view("admin/"&msgType&".htm")
 	v.assign "message", msg
@@ -182,8 +183,19 @@ Sub message(msg, msgType)
 	Set v = nothing
 End Sub
 
+'alert并返回
 Sub alert(msg)
 	response.write "<script type='text/javascript'>alert("""&msg&""");history.back()</script>"
 	resposne.End
 End Sub
+
+'返回目录名
+Function dirname(f)
+	dirname = Mid(f,1,InstrRev(f,"\")-1)
+End Function
+
+'返回文件名
+Function basename(f)
+	basename = Mid(f,InstrRev(f,"\")+1)
+End Function
 %>
