@@ -69,7 +69,7 @@ Class Config_
 
 	Private Sub Class_Initialize
 		appRoot				= ""
-		dbPath				= Server.MapPath(appRoot & "/system/asplite/db/webapp.mdb")
+		dbPath				= Server.MapPath(appRoot & "/system/db/webapp.mdb")
 		dbDriver			= "access"
 		urlCommand			= "act"
 		sessionTime			= 30
