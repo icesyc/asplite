@@ -1,5 +1,5 @@
 <%
-' 应用程序启动加载程序员
+' 应用程序启动加载程序
 '
 ' @package    asplite
 ' @version    $Id$
@@ -15,6 +15,9 @@ Private Function sqlCheck(ByVal Str)
 	If Instr(LCase(Str),"select ") > 0 Or Instr(LCase(Str),"insert ") > 0 Or Instr(LCase(Str),"delete ") > 0 Or Instr(LCase(Str),"delete from ") > 0 or Instr(LCase(Str),"count(") > 0 or Instr(LCase(Str),"drop table") > 0 or Instr(LCase(Str),"update ") > 0 or Instr(LCase(Str),"truncate ") > 0 or Instr(LCase(Str),"asc(") > 0 or Instr(LCase(Str),"mid(") > 0 or Instr(LCase(Str),"char(") > 0 or Instr(LCase(Str),"xp_cmdshell") > 0 or Instr(LCase(Str),"exec master") > 0 or Instr(LCase(Str),"net localgroup administrators") > 0  or Instr(LCase(Str),"and ") > 0 Or Instr(LCase(Str),"net user") > 0 Or Instr(LCase(Str),"or ") > 0 Then
 		sqlCheck = 1
 	End If
+
+	If InStr(LCase(str), Chr(0)) > 0 Then  sqlCheck = 1	'防止溢出
+
 	Str=Replace(LCase(Str),"select ","")
 	Str=Replace(LCase(Str),"insert ","")
 	Str=Replace(LCase(Str),"delete ","")
@@ -46,6 +49,7 @@ Private Function sqlCheck(ByVal Str)
 	Str=Replace(Str,chr(43),"")            '过滤SQL注入+
 	Str=Replace(Str,"{","")            '过滤SQL注入{
 	Str=Replace(Str,"}","")            '过滤SQL注入}
+	str=Replace(Str,Chr(0),"")
 	If sqlCheck <> 0 Then Response.End
 End Function
 

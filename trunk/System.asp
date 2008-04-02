@@ -35,8 +35,10 @@ Class System_
 		Response.End()
 	End Function
 
-	Public Sub run 
-		act = Request(Config.urlCommand)
+	Public Sub run
+		Dim act: act = ""
+		If Request.QueryString(Config.urlCommand) <> "" Then act = Trim(Request.QueryString(Config.urlCommand))
+		If Request.Form(Config.urlCommand) <> "" Then act = Trim(Request.Form(Config.urlCommand))
 		If act = "" Then act = Config.defaultAction
 		'检查命令是否可用
 		availAct = Split(Config.pageActList, ",")

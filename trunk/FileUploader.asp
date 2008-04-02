@@ -100,7 +100,7 @@ End Sub
 '分析上传的数据
 Public Sub GetData ()
 	 '定义变量
-	on error Resume Next
+	'on error Resume Next
 	if isGetData_=false then 
 		Dim RequestBinDate,sSpace,bCrLf,sInfo,iInfoStart,iInfoEnd,tStream,iStart,oFileInfo
 		Dim sFormValue,sFileName
