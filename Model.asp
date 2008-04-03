@@ -29,7 +29,7 @@ Class Model_
 
 	'Îö¹¹º¯Êý
 	Private Sub Class_Terminate
-		If IsObject(rs) Then
+		If typeName(rs) = "Recordset" Then
 			If  rs.state <> adStateClosed Then rs.close
 			Set rs = nothing
 		End If

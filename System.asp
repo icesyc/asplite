@@ -51,8 +51,8 @@ Class System_
 	End Sub
 
 	Public Sub Class_Terminate
-		If IsObject(Conn) Then 
-			Conn.close
+		If TypeName(Conn) = "Connection" Then 
+			If Conn.state <> AdStateClosed Then Conn.close
 			Set Conn = nothing
 		End If
 		Set Config = Nothing
