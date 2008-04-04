@@ -196,7 +196,6 @@ Class Template
 	' Êä³ö
 	Public Sub display
 		response.write parse()
-		response.End
 	End Sub
 
 	' @access Private
