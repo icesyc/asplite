@@ -180,7 +180,8 @@ Sub message(msg, msgType)
 	Set v = view("admin/"&msgType&".htm")
 	v.assign "message", msg
 	v.display
-	Set v = nothing
+	Set v = Nothing
+	resposne.End
 End Sub
 
 'alert²¢·µ»Ø
