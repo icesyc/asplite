@@ -31,7 +31,7 @@ Class Pager_
 	Public Sub Class_Initialize()
 		errorMsg	= ""
 		linkNumber  = 10
-		formatStr   = "Pages: [current]/[total] 总记录数 [recordCount] [prev]上一页[/prev] [prevnav]前10页[/prevnav] [nav]  [nextnav]后10页[/nextnav] [next]下一页[/next]"
+		formatStr   = "Pages: [current]/[total] 总记录数 [recordCount] [prev]上一页[/prev] [prevnav]前10页[/prevnav] [nav]  [nextnav]后10页[/nextnav] [next]下一页[/next] [jumper]"
 	End Sub 
 	
 	'显示总的分页数
@@ -61,11 +61,18 @@ Class Pager_
 				nav = nav & " <a href='"& url & i &"'>"& i &"</a>"
 			End If
 		Next
+		'生成跳转菜单
+		jumper = "<select id='jumper' onchange=""location.href='"&url&"'+this.value"">"
+		For i = 1 To pageCount
+			jumper = jumper & "<option value="""&i&""">"&i&"</option>"
+		Next
+		jumper = jumper & "</select>"
+
 		'去掉第一个空格
 		nav = Mid(nav, 2)
 		'第一页和最后一页
-		first_   = "<a href='"& url & "1'>1</a>"
-		last_    = "<a href='"& url & pageCount &"'>"& pageCount &"</a>"
+		first_   = "<a href='"& url & "1'>$1</a>"
+		last_    = "<a href='"& url & pageCount &"'>$1</a>"
 
 		'默认的上一页，下一页，上导航，下导航
 		prev_	 = "<a>$1</a>"
@@ -80,6 +87,7 @@ Class Pager_
 		outFormat = Replace(outFormat, "[total]", pageCount)
 		outFormat = Replace(outFormat, "[recordCount]", recordCount)
 		outFormat = Replace(outFormat, "[nav]", nav)
+		outFormat = Replace(outFormat, "[jumper]", jumper)
 		reg =  Array("\[prev\](.+?)\[\/prev\]", "\[next\](.+?)\[\/next\]", "\[first\](.+?)\[\/first\]", "\[last\](.+?)\[\/last\]", "\[prevnav\](.+?)\[\/prevnav\]","\[nextnav\](.+?)\[\/nextnav\]")
 		rep  = Array(prev_ , next_ , first_ , last_ , prevnav_ , nextnav_)
 		For i = 0 To UBound(reg)
