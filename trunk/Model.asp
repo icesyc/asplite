@@ -29,7 +29,7 @@ Class Model_
 
 	'析构函数
 	Private Sub Class_Terminate
-		If typeName(rs) = "Recordset" Then
+		If IsObject(rs) Then
 			If  rs.state <> adStateClosed Then rs.close
 			Set rs = nothing
 		End If
@@ -53,7 +53,7 @@ Class Model_
 		rs.open table,Conn,1,3
 		rs.addNew
 		For Each f In rs.Fields
-			If f.name = "created" Or f.name = "updated" Then rs(f.name) = now
+			If (f.name = "created" Or f.name = "updated") And Not data.exists(f.name) Then rs(f.name) = now
 			If f.name <> PK And data.exists(f.name) Then rs(f.name) = data.Item(f.name)
 		Next
 		rs.update
@@ -66,7 +66,7 @@ Class Model_
 		If typeName(data) <> "Dictionary" Then System.halt("model.save : 参数必须是一个集合")
 		rs.open "select * from "& table &" where "& PK &"="& data.Item(PK),Conn,1,3
 		For Each f In rs.Fields			
-			If f.name = "updated" Then rs(f.name) = now
+			If f.name = "updated" And Not data.exists(f.name) Then rs(f.name) = now
 			If f.name <> PK And data.exists(f.name) Then rs(f.name) = data.Item(f.name)
 		Next
 		rs.update
