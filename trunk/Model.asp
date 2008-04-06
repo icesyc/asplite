@@ -84,7 +84,8 @@ Class Model_
 	'@param field 要增加的字段
 	Public Function increField(id, field)
 		sql = "update "&table&" set "&field&"="&field&"+1 where "&PK&"="&id
-		Conn.exec sql, increField
+		debug_(sql)
+		Conn.execute sql, increField
 	End Function
 
 	'根据主键取得一条记录
