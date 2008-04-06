@@ -200,7 +200,7 @@ Class Model_
 	End Function
 
 	'将RS对象转换成
-	Private Function rs2col(rs)
+	Public Function rs2col(rs)
 		Dim i,v
 		Set rs2col = server.CreateObject("Scripting.Dictionary")
 		If Not rs.eof Then
