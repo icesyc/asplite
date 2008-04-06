@@ -187,7 +187,7 @@ End Sub
 'alert并返回
 Sub alert(msg)
 	response.write "<script type='text/javascript'>alert("""&msg&""");history.back()</script>"
-	resposne.End
+	response.End
 End Sub
 
 '返回目录名
