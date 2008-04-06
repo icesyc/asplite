@@ -140,7 +140,9 @@ Class Template
 							Next 
 						End If
 					Else '一维集合
-						replacement = replaceMatch(block, obj, matches2)
+						For Each k2 In obj
+							replacement = replacement & Replace(Replace(block, "{key}", k2), "{value}", obj.Item(k2))
+						Next
 					End If
 				End If
 				res = Replace(res, match.value, replacement)
@@ -196,11 +198,11 @@ Class Template
 	' 输出
 	Public Sub display
 		response.write parse()
+		response.End
 	End Sub
 
-	' @access Private
 	' 用于生成HTML文本
-	Private Function html(filePath)
+	Public Function html(filePath)
 		Dim res,i,newFile
 		If filePath = "" Then e "Template.html : 未指定要生成的页面路径."
 		res = parse()
