@@ -52,7 +52,7 @@ Class System_
 
 	Public Sub Class_Terminate
 		If TypeName(Conn) = "Connection" Then 
-			If Conn.state <> AdStateClosed Then Conn.close
+			If Conn.state <> 0 Then Conn.close
 			Set Conn = nothing
 		End If
 		Set Config = Nothing

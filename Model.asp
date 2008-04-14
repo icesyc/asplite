@@ -23,14 +23,14 @@ Class Model_
 	'构造函数
 	Private Sub Class_initialize
 		'lazy load
-		If Not IsObject(Conn) Then initDB()
+		If TypeName(Conn) <> "Connection" Then  initDB()
 		Set rs = server.CreateObject("adodb.recordset")
 	End Sub
 
 	'析构函数
 	Private Sub Class_Terminate
 		If IsObject(rs) Then
-			If  rs.state <> adStateClosed Then rs.close
+			If  rs.state <> 0 Then rs.close
 			Set rs = nothing
 		End If
 	End Sub

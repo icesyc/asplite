@@ -122,7 +122,7 @@ End Function
 '新建一个rs对象
 Function newRS()
 	'如果没有连接数据库，自动连接
-	If Not IsObject(Conn) Then initDB()
+	If TypeName(Conn) <> "Connection" Then  initDB()
 	Set newRS = server.CreateObject("adodb.recordset")
 End Function 
 
