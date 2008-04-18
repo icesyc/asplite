@@ -37,8 +37,11 @@ Class System_
 
 	Public Sub run
 		Dim act: act = ""
-		If Request.QueryString(Config.urlCommand) <> "" Then act = Trim(Request.QueryString(Config.urlCommand))
-		If Request.Form(Config.urlCommand) <> "" Then act = Trim(Request.Form(Config.urlCommand))
+		If Request.QueryString(Config.urlCommand) <> "" Then
+			act = Trim(Request.QueryString(Config.urlCommand))
+		ElseIf Request.Form(Config.urlCommand) <> "" Then
+			act = Trim(Request.Form(Config.urlCommand))
+		End If
 		If act = "" Then act = Config.defaultAction
 		'检查命令是否可用
 		availAct = Split(Config.pageActList, ",")
