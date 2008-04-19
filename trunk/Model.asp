@@ -126,7 +126,7 @@ Class Model_
 		If IsNumeric(page) And page > 1 And limit > 0 Then
 			sql = sql & " where "& PK &" not in("
 			sql = sql & "select top "& (page-1)*limit &" "& PK &" from "& table & where & order
-			sql = sql & ")"
+			sql = sql & ")" & IIF(where = "", "", Replace(where, "where", "and"))
 		Else
 			sql = sql & where
 		End If
