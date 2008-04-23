@@ -191,12 +191,37 @@ Sub alert(msg)
 End Sub
 
 '返回目录名
-Function dirname(f)
+Function dirname(ByVal f)
+	If InstrRev(f, "\") Then 
 	dirname = Mid(f,1,InstrRev(f,"\")-1)
+	ElseIf InstrRev(f, "/") Then
+		dirname = Mid(f,1,InstrRev(f,"/")-1)
+	Else
+		dirname = f
+	End If
 End Function
 
 '返回文件名
-Function basename(f)
-	basename = Mid(f,InstrRev(f,"\")+1)
+Function basename(ByVal f)
+	If InstrRev(f, "\") Then 
+		basename = Mid(f,InstrRev(f,"\")+1)
+	ElseIf InstrRev(f, "/") Then
+		basename = Mid(f,InstrRev(f,"/")+1)
+	Else
+		basename = f
+	End If
+End Function
+
+'计算大小
+Function sizeCount(size)
+	If size >= 1073741824 Then
+		sizeCount = Round(size/1073741824,2) & "G"
+	ElseIf size >= 1048576 Then
+		sizeCount = Round(size/1048576,2) & "M"
+	ElseIf size >= 1024 Then
+		sizeCount = Round(size/1024,2) & "K"
+	Else 
+		sizeCount = size & "Byte"
+	End If
 End Function
 %>
