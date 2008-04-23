@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> </title>
+<meta http-equiv="content-type" content="text/html;charset=GBK"/>
+<meta name="Author" content="ice_berg16(寻梦的稻草人)"/>
+<link rel="stylesheet" href="style/global.css" type="text/css"/>
+<script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript" src="javascript/jquery.util.js"></script>
+</head>
+<body>
+<div class="main-box">
+	<div class="head-dark-box">
+		图文页面管理
+	</div>
+	<div class="body-box">
+		[<a href="page.asp?act=save">添加新的图文页面</a>]
+	</div>
+	<form method="post" action="page.asp?act=delete">
+	<div class="white-box">
+		<table class="list-table" cellspacing="0">
+			<tr class='head-light-box'>
+				<td width="4%">&nbsp;</td>
+				<td>页面名称</td>
+				<td>操作</td>
+			</tr>
+		<!-- BEGIN pageList -->
+			<tr>
+				<td><input type="checkbox" name="id" value="{id}" /></td>
+				<td><a href="#">{title}</a></td>
+				<td>
+					[<a href="page.asp?act=save&id={id}">修改</a>]
+					[<a href="page.asp?act=delete&id={id}" onclick="return confirm('确实要删除吗？')">删除</a>]
+				</td>
+			</tr>
+		<!-- END pageList -->
+			<tr>
+				<td align="right" colspan="4" id="pager">{pager}</td>
+			</tr>
+			<tr class="head-light-box">
+				<td colspan="4">
+				<input type="checkbox" onclick="$(':checkbox').checkAll(this.checked)" id="ckall"/>	全选
+				&nbsp;&nbsp;选中项: <input type="image" src="style/images/delete.gif" alt="删除" onclick="return confirm('确实要删除吗？')"/>	
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+</body>
+</html>

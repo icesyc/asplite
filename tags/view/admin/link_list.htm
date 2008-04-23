@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html;charset=gbk"/>
+<link rel="stylesheet" href="style/global.css" type="text/css" />
+<script type="text/javascript" src="javascript/jquery.js" ></script>
+<script type="text/javascript" src="javascript/jquery.util.js" ></script>
+</head>
+<body>
+<div class="main-box">
+	<div class="head-dark-box">
+		友情链接管理
+	</div>
+	<div class="body-box">
+		[<a href="link.asp?act=save">添加链接</a>]
+	</div>
+	<form method="post" action="link.asp?act=delete" class="white-box">
+	<table class="list-table" cellspacing="0">
+		<tr class="head-light-box">
+			<td>&nbsp;</td>
+			<td width="35%">标题/图片</td>
+			<td width="35%">URL地址</td>
+			<td width="15%">操作</td>
+		</tr>
+		<!-- BEGIN linkList -->
+		<tr>
+			<td><input type="checkbox" name="id" value="{id}"/>
+			<td>{title} <img src="{logo}" height="60" align="absmiddle"/></td>
+			<td><a href="{url}" target="_blank">{url}</a></td>
+			<td>
+			[<a href="link.asp?act=delete&id={id}" onclick="return confirm('确实要删除吗？')">删除</a>]
+			</td>
+		</tr>
+		<!-- END linkList -->
+		<tr class="head-light-box">
+			<td colspan="5">
+			<input type="checkbox" onclick="$(':checkbox').checkAll(this.checked)" id="ckall"/>	全选
+			&nbsp;&nbsp;选中项: <input type="image" src="style/images/delete.gif" alt="删除" onclick="return confirm('确实要删除吗？')"/>	
+			</td>
+		</tr>
+	</table>
+	</form>
+</div>
+</body>
+</html>

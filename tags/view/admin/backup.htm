@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html;charset=GB2312" />
+<meta name="Generator" content="EditPlus" />
+<meta name="Author" content="ice_berg16(寻梦的稻草人)" />
+<meta name="Keywords" content="PHP系统" />
+<script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript" src="javascript/jquery.util.js"></script>
+<link rel="stylesheet" href="style/global.css" type="text/css" />
+<style>
+.tip-div {
+	position:absolute;
+	left:expression((document.body.clientWidth-this.offsetWidth)/2);
+	top: expression((document.body.clientHeight-this.offsetHeight)/2.5);
+	border:1px solid #0152AE;
+	background:#FFF;
+	width:50%;
+	text-align:center;
+	visibility:hidden;
+}
+.tip-div div {
+	background:#318ADE;
+	color:#FFF;
+	margin:2px;
+	padding:40px;
+	font-size:16px;
+	font-weight:bold;
+}
+input,select,option{
+	font:Verdana;
+}
+</style>
+</head>
+
+<body>
+<div class="tip-div" id="dumpTip">
+	<div>正在备份数据库，请稍候...</div>
+</div>
+<div class="tip-div" id="restoreTip">
+	<div>正在恢复数据库，请稍候...</div>
+</div>
+<div class="main-box">
+	<div class="head-dark-box">
+		数据库备份
+	</div>
+	<div class="body-box tip-msg">
+		<ul>
+			<li>数据库位置： {dbPath}</li>
+		</ul>
+	</div>
+	<form method="post" class="white-box" action="backup.asp" name="dumpForm" onsubmit="showTip(this);return false">
+		<table class="list-table" cellspacing="0">
+			<tr>
+				<td width="20%">保存位置</td>
+				<td><input type="radio" name="saveType"	value="server" id="save1"/>
+					<label for="save1">服务器</label>
+					<input type="radio" name="saveType"	value="client" checked="true" id="save2"/>
+					<label for="save2">下载到本地</label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="hidden" name="act" value="backup" />
+				</td>
+				<td>
+					<input type="submit" class="button" value=" 开始备份 "/>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<div class="head-dark-box">
+		数据库恢复
+	</div>
+	<div class="body-box tip-msg">
+		<ul>
+			<li>恢复数据时可选择服务器上的备份数据或上传本地数据。</li>
+		</ul>
+	</div>
+	<form method="post" class="white-box" action="backup.asp?act=restore" enctype="multipart/form-data"
+	name="restoreForm" onsubmit="showTip(this);return false">
+		<table class="list-table" cellspacing="0">
+			<tr>
+				<td width="20%">恢复选项</td>
+				<td><input type="radio" name="restoreType"	value="server" onclick="shift('fname','dbfile');hideTip()" id="rt1"/>
+				<label for="rt1">从服务器上恢复</label>
+					<input type="radio" name="restoreType"	value="client" checked="true" onclick="shift('dbfile','fname');hideTip()" id="rt2"/>
+					<label for="rt2">从本地上传</label>
+				</td>
+			</tr>
+			<tr>
+				<td>请选择数据库文件</td>
+				<td>
+					<select name="fname" id="fname" onchange='showBtn()' class="hide">
+						<option value=''>请选择数据库文件</option>
+						<!-- BEGIN fileList -->
+						<option value="{file}">{file}</option>
+						<!-- END fileList -->
+					</select>
+					<input type="file" name="dbfile">
+					<span id='s-dbf' class="tip">请选择要上传的数据文件.</span>
+					<span id="btn" class="hide">
+					<input type="button" class="button" value=" 删除 " onclick="location.href='backup.asp?act=delete&fname='+this.form.fname.value"/>
+					<input type="button" class="button" value=" 下载 " onclick="location.href='backup.asp?act=download&fname='+this.form.fname.value"/>
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="hidden" name="act" value="restore" />
+				</td>
+				<td>
+					<input type="submit" class="button" value=" 开始恢复 "/>
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+<script type="text/javascript">
+//切换恢复选项
+function shift( showObj, hideObj )
+{
+	document.restoreForm.elements[showObj].style.display = 'inline';
+	document.restoreForm.elements[hideObj].style.display = 'none';
+	if( showObj == 'dbfile' )
+		document.getElementById("btn").className = 'hide';
+	else
+		showBtn();
+}
+//隐藏提示信息
+function hideTip()
+{
+	$( "#s-dbf" ).css("display", 'none');
+}
+//给出提示信息并提交表单
+function showTip( form )
+{
+	if( form.name == "restoreForm" )
+	{
+		if( form.dbfile.value == '' && form.restoreType[1].checked )
+		{
+			$( "#s-dbf" ).text("请上传数据文件.").css("display", 'inline');
+			return false;
+		}
+		if( form.fname.selectedIndex == 0 && form.restoreType[0].checked)
+		{
+			$( "#s-dbf" ).text("没有选择数据库文件.").css("display", 'inline');
+			return false;
+		}
+		if(!confirm('该操作会将以前的数据库覆盖，建议你先将数据库备份，确认要恢复数据库吗？')){
+			return false;
+		}
+	}
+
+	//禁用按钮
+	var els = document.forms[0].elements;
+	var els2= document.forms[1].elements;
+	for(i=0;i<els.length;i++)
+	{
+		t = els[i].type.toLowerCase();
+		if( t == "submit" || t == "button" )
+		{
+			els[i].disabled = true;
+		}
+	}
+	for(i=0;i<els2.length;i++)
+	{
+		t1 = els2[i].type.toLowerCase();
+		if( t1 == "submit" || t1 == "button" )
+		{
+			els2[i].disabled = true;
+		} 
+	}
+
+	//显示提示信息
+	if( form.name == "dumpForm")
+	{
+		document.getElementById("restoreTip").style.visibility = "hidden";
+		document.getElementById("dumpTip").style.visibility = "visible";		
+	}
+
+	if( form.name == "restoreForm" )
+	{
+		if( form.elements['act'].value == 'restore' )
+		{
+			document.getElementById("dumpTip").style.visibility = "hidden";
+			document.getElementById("restoreTip").style.visibility = "visible";		
+		}
+	}
+
+	form.submit();
+}
+function showBtn()
+{
+	var btn = document.getElementById("btn");
+	if( document.restoreForm.fname.selectedIndex != 0 )
+		btn.className = '';
+	else
+		btn.className = 'hide';
+}
+</script>
+</body>
+</html>

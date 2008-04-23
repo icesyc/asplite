@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> </title>
+<meta http-equiv="content-type" content="text/html;charset=GBK"/>
+<meta name="Author" content="ice_berg16(寻梦的稻草人)"/>
+<link rel="stylesheet" href="style/global.css" type="text/css"/>
+<script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript" src="javascript/jquery.util.js"></script>
+</head>
+<body>
+<div class="main-box">
+	<div class="head-dark-box">
+		产品管理
+	</div>
+	<div class="body-box">
+		选择分类 
+		<select name="sort_id" id="sort_id" onchange="location.href='product.asp?sort_id='+this.value">
+			<option value=''>请选择分类</option>
+			<!-- BEGIN sortList -->
+			<option value="{id}">{indent}{name}</option>
+			<!-- END sortList -->
+		</select>
+		<script type="text/javascript">
+			$("#sort_id").val('{sort_id}');
+		</script>
+	</div>
+	<form method="post" action="product.asp">
+	<div class="white-box">
+		<table class="list-table" cellspacing="0">
+			<tr class='head-light-box'>
+				<td width="4%">&nbsp;</td>
+				<td>产品名称</td>
+				<td>分类</td>
+				<td>发布日期</td>
+				<td>操作</td>
+			</tr>
+		<!-- BEGIN productList -->
+			<tr>
+				<td><input type="checkbox" name="id" value="{id}" /></td>
+				<td><a href="#" target="_blank">{title} {pic}</a></td>
+				<td>{sort}</td>
+				<td>{created}</td>
+				<td>
+					[<a href="product.asp?act=save&id={id}">修改</a>]
+					[<a href="product.asp?act=delete&id={id}" onclick="return confirm('确实要删除吗？')">删除</a>]
+					[<a href="product.asp?act={act}&id={id}">{actText}</a>]
+				</td>
+			</tr>
+		<!-- END productList -->
+			<tr>
+				<td align="right" colspan="5" id="pager">{pager}</td>
+			</tr>
+			<tr class="head-light-box">
+				<td colspan="5">
+				<input type="checkbox" onclick="$(':checkbox').checkAll(this.checked)" id="ckall"/>	全选
+				&nbsp;&nbsp;选中项: <input type="image" src="style/images/delete.gif" alt="删除" onclick="return confirm('确实要删除吗？')"/>
+				&nbsp;<input type="image" src="style/images/top.gif" title="推荐" onclick="this.form.act.value='recmd'"/>	
+				&nbsp;<input type="image" src="style/images/down.gif" title="取消推荐" onclick="this.form.act.value='cancelRecmd'"/>	
+				<input type="hidden" name="act" value="delete"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html;charset=GBK"/>
+<meta name="Author" content="ice_berg16(寻梦的稻草人)"/>
+<link rel="stylesheet" href="style/global.css" type="text/css"/>
+<script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript" src="javascript/jquery.util.js"></script>
+</head>
+<body>
+<div class="main-box">
+	<div class="head-dark-box">
+		留言管理
+	</div>
+	<form method="post" action="message.asp?act=delete">
+	<div class="white-box">
+		<table class="list-table" cellspacing="0" style="color:#000">
+			<tr class='head-light-box'>
+				<td width="4%">&nbsp;</td>
+				<td>标题</td>
+				<td>姓名</td>
+				<td>电话</td>
+				<td>email</td>
+				<td>留言时间</td>
+				<td>操 作</td>
+			</tr>
+		<!-- BEGIN messageList -->
+			<tr>
+				<td><input type="checkbox" name="id" value="{id}" /></td>
+				<td>{title}</td>
+				<td>{name}</td>
+				<td>{tel}</td>
+				<td>{email}</td>
+				<td>{created}</td>
+				<td>
+				[<a href="javascript:void(0)" onclick="$('#content{id}').toggle()">查看</a>]
+				[<a href="message.asp?act=delete&id={id}" onclick="return confirm('确实要删除吗？')">删除</a>]
+				</td>
+			</tr>
+			<tr class="hide" id="content{id}">
+				<td colspan="8"><textarea style="width:90%;height:100px;overflow:visible;border:0">{content}</textarea></td>
+			</tr>
+		<!-- END messageList -->
+			<tr>
+				<td align="right" colspan="10" id="pager">{pager}</td>
+			</tr>
+			<tr class="head-light-box">
+				<td colspan="10">
+				<input type="checkbox" onclick="$(':checkbox').checkAll(this.checked)" id="ckall"/>	全选
+				&nbsp;&nbsp;选中项: <input type="image" src="style/images/delete.gif" alt="删除" onclick="return confirm('确实要删除吗？')"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+</body>
+</html>
