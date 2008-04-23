@@ -1,0 +1,286 @@
+/*====================================================
+//		FileName:global.css
+//		Summary: 系统全局样式表文件
+//		Author: ice_berg16(寻梦的稻草人)
+//		LastModifed:2006-2-19
+//		copyright (c)2006 ice_berg16@163.com
+//===================================================*/
+
+/*  全局部分  */
+a:link, a:visited {
+	font-size:12px;
+	font-family:verdana, sans-serif;
+	color:#2951A5;
+	text-decoration:none;
+}
+a:hover {
+	font-size:12px;
+	font-family:verdana, sans-serif;
+	color:#F00;
+	text-decoration:none;
+}
+form {
+	margin:0px;
+	padding:0px;
+}
+ul {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+}
+img {
+	border:0px;
+}
+input, select, textarea{
+	font-size:12px;
+}
+body {
+	margin:0px;
+	padding:0px;
+	font-size:12px;
+	font-family:verdana, sans-serif;
+	background:#EFF3FF;
+
+}
+body, table td, textarea{
+	font-size:12px;
+}
+/* head 部分 */
+#head {
+	margin:5px;
+	padding:10px 20px;
+	background:#00A6EF url(images/main_bg.gif);
+	height:50px !important;
+	height:70px;
+}
+#logo {
+	font-weight:bold;
+	font-size:18pt;
+	font-family:Arial, sans-serif; 
+	color:#FFF;
+	padding-top:10px;
+	float:left;
+}
+/* 左边菜单部分 */
+.menu {
+	margin:5px;
+	padding:1px;
+	border:1px solid #B5CFE7;
+	background:#FFF;
+	width:130px;
+	
+}
+.menu-head {	
+	background:url(images/menu_head.gif);
+	height:24px;
+}
+.menu-head a:link, .menu-head a:visited,.menu-head a:hover{
+	background:url(images/max.gif) no-repeat 8px top;
+	color:#FFF;
+	font-weight:bold;
+	display:block;
+	line-height:24px;
+	padding-left:2.2em;
+}
+
+.menu ul {
+	display:none;
+}
+.menu li {
+	display:block;
+	width:100%;
+	background:url(images/dotline.gif) repeat-x center bottom;
+}
+.menu li a:link, .menu li a:visited{
+	padding: .5em 2.2em;
+	background:url(images/dot_1.gif) no-repeat 10px 7px;
+	color:#2951A5;
+	display:block;
+}
+.menu li a:hover {
+	background-color:#EFF3FF;
+	color:#F00;
+}
+#menu-box {
+	background:#FFF;
+	border:1px solid #B5CFE7;
+	width:90%;
+	margin-left:5px;
+}
+/* 主体样式 */
+.main-box {
+	background:#FFF;
+	border:1px solid #B5CFE7;
+	margin-right:5px;
+	margin-bottom:5px;
+}
+.head-dark-box {
+	margin:2px;
+	padding:.5em 1em;
+	border-left:10px solid #0152AE;
+	background:#318ADE;
+	color:#FFF;
+	font-weight:bold;
+}
+.head-light-box {
+	margin:2px;
+	padding:.5em 1em;
+	background:#DEEFFF;
+	border-left:10px solid #B5D7F7;
+	font-weight:bold;
+}
+.body-box {
+	margin:2px;
+	padding:1em;
+	line-height:150%;
+	background:#F7FBFF;
+	color:#00309C;
+}
+.white-box {
+	margin:2px;
+	background:#FFF;
+}
+/* 表格样式 */
+.list-table {
+	width:100%;
+	border-top:2px solid #6BBAEF;
+	font-size:12px;
+	font-family:verdana, sans-serif;
+	color:#00309C;
+}
+.list-table td{
+	padding:.4em 0 .4em 1.5em;
+	border-bottom:1px solid #C6E7FF;
+}
+
+/* 表单样式 */
+form div{
+	clear:left;
+	margin:8px;
+}
+form div.with-line{
+	padding-bottom:10px;
+	border-bottom:2px solid #6BBAEF;
+}
+form label.field{
+	float:left;
+	width:10%;
+	text-align:right; 
+	padding:4px;
+	margin-right:10px;
+}
+.fixwidth{
+	width:12em;
+	height:16px;
+}
+.button {
+	border:1px solid #B6B3AF;
+	padding:2px 12px;
+	_padding:1px 2px 0;
+	background:url(images/buttonface.gif) repeat-x; 
+	height:24px;
+}
+/* 必埴信息 */
+.require-field {
+	background-image:url(images/star.gif);
+	background-repeat:no-repeat;
+	background-position:1.6em .7em;
+}
+/* 登录页面样式 */
+#login-box {
+	width:460px;
+	text-align:left;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:15%;
+}
+#login-form {
+	margin:2px;
+	padding-left:8em;
+	background:#fff url(images/login.jpg) no-repeat 10% 10%;	
+}
+.login-msg {
+	margin:2px;
+	padding:10px;
+	background:#F7FBFF url(images/alert.gif) no-repeat 2em center;
+	padding-left:4em;
+	color:#F00;
+	border-bottom:2px solid #6BBAEF;
+}
+/* 显示信息的样式 */
+.error-msg {
+	background:#F7FBFF url(images/alert.gif) no-repeat 2em top;
+	padding-left:6em;
+	color:#F00;
+}
+.success-msg {
+	background:#F7FBFF url(images/success.gif) no-repeat 2em top;
+	padding-left:6em;
+	color:#00309C;
+}
+.tip-msg {
+	background:#F7FBFF url(images/tip.gif) no-repeat 2em center;
+	padding-left:6em;
+	color:#00309C;
+}
+
+/* 分页显示的页码样式 */
+#pager{
+	padding:10px;
+	text-align:right;
+}
+#pager a{
+	padding:2px 6px;
+	border:1px solid #C6E7FF;
+}
+#pager a:hover{
+	background:#DEEFFF;
+}
+#pager .current{
+	color:red;
+}
+
+/* 其它样式 */
+.red {
+	color:#F00;
+}
+
+.float {
+	float:left;
+	margin-right:5px;
+}
+.clear{
+	clear:both;	
+	height:1px;
+	overflow:hidden;
+}
+.center {
+	text-align:center;
+}
+
+.hide{
+	display:none;	
+}
+.hidden{
+	visibility:hidden;
+}
+
+/* 颜色样式 */
+.gray {
+	color:gray;
+}
+.red {
+	color:red;
+}
+.green {
+	color:green;
+}
+.black {
+	color:black;
+}
+/* 提示消息的框样式 */
+.tip {
+	display:none;
+	color:red;
+	margin-left:10px;
+}

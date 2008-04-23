@@ -1,0 +1,41 @@
+/* tab ±êÇ©ÑùÊ½ */
+ul.tab{
+	height:25px;
+	font-size:14px;
+	background:#fff url(images/dot_bg.gif) repeat-x left bottom;
+}
+ul.tab li{
+	float:left;
+	border-left:1px solid #90C0EB;
+	border-right:1px solid #90C0EB;
+	border-bottom:1px solid #90C0EB;
+	height:24px;
+	padding:0 20px;
+	line-height:24px;
+	margin:0 5px;
+	background:#F7FBFF url(images/dot_bg.gif) repeat-x left top;
+	cursor:pointer;
+}
+ul.tab li.over{
+	background-color:#fff;
+}
+ul.tab li.active{
+	border-bottom:1px solid #fff;
+	background-color:#fff;
+}
+div.submenu{
+	border-left:1px solid #90C0EB;
+	border-right:1px solid #90C0EB;
+	border-bottom:4px solid #6BBAEF;
+	margin:0;
+}
+div.sub-menu{
+	padding:10px;
+	display:none;
+	margin:0;
+}
+div.sub-menu-show{
+	padding:10px;
+	display:block;
+	margin:0;
+}
