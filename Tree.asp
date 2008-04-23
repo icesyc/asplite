@@ -155,6 +155,15 @@ Class Tree_
 		rs.close
 	End Function
 
+	'取得父节点
+	Public Function getParent(ByVal id)
+		Set node = getNode(id)
+		sql = "select top 1 * from "&table&" where left_value<"&node.Item("left_value")&" and right_value>"&node.Item("right_value")&" and parent_id<>-1 order by left_value desc"
+		rs.open sql, Conn, 1, 1
+		Set getParent = rs2col(rs)
+		rs.close
+	End Function 
+
 	'取直接子节点
 	Public Function getChild(id)
 		Dim sql, i
@@ -171,7 +180,7 @@ Class Tree_
 	End Function
 
 	'取得以某个节点为根的子树
-	Public Function getSubTree(node)
+	Public Function getSubTree(ByVal node)
 		Dim sql, i
 		If typeName(node) <> "Dictionary" Then Set node = getNode(node)
 		sql = "select * from "&table&" where left_value between "&node.Item("left_value")&" and "&node.Item("right_value")&" order by left_value"
