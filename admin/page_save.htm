@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> </title>
+<meta http-equiv="content-type" content="text/html;charset=GBK"/>
+<meta name="Author" content="ice_berg16(寻梦的稻草人)"/>
+<link rel="stylesheet" href="style/global.css" type="text/css" />
+<script type="text/javascript" src="javascript/jquery.js" ></script>
+<script type="text/javascript" src="javascript/jquery.util.js" ></script>
+<style>
+div#editor {
+	text-align:center;
+}
+</style>
+</head>
+<body>
+<div class="main-box">
+<div class="head-dark-box">单一图文页面{act}</div>
+<div class="body-box tip-msg">
+	提示: 带 <img src="style/images/star.gif" alt="*"/> 的项目为必填信息.
+</div>
+<form class="white-box" action="page.asp?act=save" method="post" validate="true" name="saveForm">
+	<div class="with-line">
+		<label class="field"><img src="style/images/star.gif" alt="*"/> 页面名称</label> 
+		<input type="text" name="title" size="20" value="{title}" maxlength="20" rule="required" tip="页面名称必须填写，25个字以内" scroll="yes"/>	
+	</div>
+	<div id="editor" class="with-line">
+		{editor}
+	</div>
+	<div class="center">
+		<input type="submit" value="保 存" class="button"/>　
+		<input type="button" value="返 回" class="button" onclick="history.back()"/>
+		<input type="hidden" name="id" value="{id}"/>
+	</div>
+</form>
+</div>
+</body>
+</html>

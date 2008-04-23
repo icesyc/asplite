@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{appName}</title>
+<meta http-equiv="content-type" content="text/html;charset=GBK"/>
+<meta name="Author" content="ice_berg16(寻梦的稻草人)"/>
+<link rel="stylesheet" href="style/global.css" type="text/css"/>
+<script type="text/javascript">
+if(top != self) top.location=self.location;
+function reloadCode()
+{
+	var pic = document.getElementById("pic");
+	pic.src = "imagecode.asp?"+Math.random();
+}
+</script>
+<style>
+form label.field{
+	width:15%;
+}
+input {
+	font-family:Verdana;
+}
+</style>
+</head>
+<body class="center" onload="document.getElementById('login-form').user_name.focus()">
+<div id="login-box">
+<div class="main-box">
+	<div class="head-dark-box">
+		{appName}-管理员登录
+	</div>
+	<div class="{className}">{message}</div>
+	<form method="post" action="index.asp" id="login-form">	
+		<div>
+			<label class="field">用户名</label>
+			<input type="text" size="20" class="fixwidth" name="user_name"/>
+		</div>
+		<div>
+			<label class="field">密　码</label>
+			<input type="password" size="20" class="fixwidth" name="password"/>
+		</div>
+		<div>
+			<label class="field">验证码</label>
+			<input type="text" size="10" name="imgcode"/>
+			&nbsp;<img src="imagecode.asp" align="absmiddle" id="pic"/>
+			<!--<a href="javascript:void(0)" onclick="reloadCode()" id="piclink">看不清点我</a>-->
+		</div>
+		<div>
+			<label class="field"></label>
+			<input type="submit" class="button" value="登录系统"/>
+			<input type="hidden" name="act" value="login"/>
+		</div>
+	</form>
+</div>
+</div>
+</body>
+</html>

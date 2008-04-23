@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html;charset=gbk"/>
+<link rel="stylesheet" href="style/global.css" type="text/css"/>
+<script type="text/javascript" src="javascript/jquery.js" ></script>
+<script type="text/javascript" src="javascript/jquery.util.js" ></script>
+<script type="text/javascript" src="javascript/validator.js" ></script>
+</head>
+<body>
+<div class="main-box">
+<div class="head-dark-box">添加友情链接</div>
+<form action="link.asp?act=save" method="post" class="white-box" validate="true" enctype="multipart/form-data">
+	<div> 
+		<label class="field">网站名称</label> 
+		<input type="text"  class="highlight" name="title" size="25" rule="required" tip="网站名称不能为空"/>
+	</div>
+	<div> 
+		<label class="field">网站地址</label>
+		<input type="text"  class="highlight" name="url" size="50" rule="required" tip="网站地址不能为空"/>
+	</div>
+	<div class="with-line" id="fileArea">
+		<label class="field">上传图片</label>
+		<input type="file" name="logo" rule="required" tip="请上传图片"/>
+		<span class="red">jpg/gif格式的图片
+	</div>
+	<div>
+		<label class="field"></label>
+		<input type="submit" class="button" value="确 定"/>　
+		<input type="button" class="button" value="返 回" onclick="history.back()"/>
+	</div>
+</form>
+</div>
+</body>
+</html>

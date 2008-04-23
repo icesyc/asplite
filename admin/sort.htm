@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> </title>
+<meta http-equiv="content-type" content="text/html;charset=GBK"/>
+<meta name="Author" content="ice_berg16(寻梦的稻草人)"/>
+<link rel="stylesheet" href="style/global.css" type="text/css"/>
+<script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript" src="javascript/jquery.util.js"></script>
+<script type="text/javascript" src="javascript/validator.js"></script>
+</head>
+
+<body>
+<div class="main-box">
+	<div class="head-dark-box">
+		分类添加
+	</div>
+	<form class="body-box" action="sort.asp" validate="true" method="post">
+		请输入分类名称：
+		<input type="text" name="name" rule="required" tip="请输入分类名称"/>		
+		<select name="parent_id">
+			<option value="">请选择上级分类</option>
+			<!-- BEGIN sortList -->
+			<option value="{id}">{indent}{name}</option>
+			<!-- END sortList -->
+		</select>
+		<input type="hidden" name="tbl" value="{tbl}"/>
+		<input type="hidden" name="act" value="save"/>
+		<input type="submit" name="sbt" value="提 交" class="button"/>
+	</form>
+	<div class="head-dark-box">
+		分类管理
+	</div>
+	<div class="white-box">
+		<table class="list-table" cellspacing="0">
+			<tr class='head-light-box'>
+				<td width="30%">分类名称</td>
+				<td>操 作</td>
+			</tr>
+			<!-- BEGIN sortList -->
+			<tr>
+				<td>{indent}<img src="style/images/node.gif"/>{name}</td>
+				<td>
+					[<a href="javascript:void(0)" onclick="$('#fe{id}').toggle()">修改</a>]
+					[<a href="sort.asp?act=delete&tbl={top.tbl}&id={id}" onclick="return confirm('确实要删除吗？')">删除</a>]
+				</td>
+			</tr>
+			<tr class="hide edit-row" id="fe{id}">
+				<td colspan="2">
+					<form action="sort.asp" method="post" validate="true">
+					{indent}<input type="text" name="name" size="15" value="{name}" rule="required" tip="请输入分类标题"/>&nbsp;&nbsp;
+						<input type="submit" class="button" value="提交修改"/>
+						<input type="hidden" name="id" value="{id}"/>
+						<input type="hidden" name="act" value="save"/>
+						<input type="hidden" name="tbl" value="{top.tbl}"/>
+					</form>
+				</td>
+			</tr>
+			<!-- END sortList -->
+		</table>
+	</div>
+</div>
+</body>
+</html>
