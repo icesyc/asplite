@@ -5,14 +5,12 @@
 '资源管理器
 Set fso = newFS
 rootFolder = "/userfiles"
-docRoot = IIF(Config.appRoot="", "/", Config.appRoot)
-docRoot = Server.MapPath(docRoot)
-
+docRoot = Server.MapPath("/")
 availIcon = Array("ai","avi","bmp","cs","dll","doc","exe","fla","gif","htm","html","jpg","js","mdb","mp3","pdf","png","ppt","rar","swf","swt","txt","vsd","wmv","xls","xml","zip")
 
 Function getIcon(ByVal name)
 	Dim ext 
-	ext = IIF(InStr(name,"."), Mid(name, InstrRev(name,".")+1), "")
+	ext = LCase(IIF(InStr(name,"."), Mid(name, InstrRev(name,".")+1), ""))
 	getIcon = IIF(ext="", "default", IIF(inArray(availIcon, ext), ext, "default"))
 End Function
 
