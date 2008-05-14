@@ -4,7 +4,7 @@
 <%
 '资源管理器
 Set fso = newFS
-rootFolder = "/userfiles"
+rootFolder = Config.userfiles
 docRoot = Server.MapPath("/")
 availIcon = Array("ai","avi","bmp","cs","dll","doc","exe","fla","gif","htm","html","jpg","js","mdb","mp3","pdf","png","ppt","rar","swf","swt","txt","vsd","wmv","xls","xml","zip")
 
