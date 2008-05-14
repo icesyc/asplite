@@ -6,6 +6,8 @@
 Set fso = newFS
 rootFolder = Config.userfiles
 docRoot = Server.MapPath("/")
+'对于IIS5,盘符为小写,而文件路径的盘符为大写,所以要转换成大写
+docRoot = UCase(Left(docRoot,1)) & Mid(docRoot,2)
 availIcon = Array("ai","avi","bmp","cs","dll","doc","exe","fla","gif","htm","html","jpg","js","mdb","mp3","pdf","png","ppt","rar","swf","swt","txt","vsd","wmv","xls","xml","zip")
 
 Function getIcon(ByVal name)
@@ -13,7 +15,6 @@ Function getIcon(ByVal name)
 	ext = LCase(IIF(InStr(name,"."), Mid(name, InstrRev(name,".")+1), ""))
 	getIcon = IIF(ext="", "default", IIF(inArray(availIcon, ext), ext, "default"))
 End Function
-
 '列表
 Sub default
 	path = request.querystring("path")
