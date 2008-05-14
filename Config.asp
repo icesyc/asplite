@@ -75,7 +75,7 @@ Class Config_
 		sessionTime			= 30
 		viewPath			= Server.MapPath(appRoot & "/system/view")
 		editorPath			= appRoot & "/system/fckeditor/"
-		userfiles			= appRoot & "/userfiles/"
+		userfiles			= appRoot & "/userfiles"
 		appName				= "asp³ÌÐò"
 		defaultAction		= "default"
 		tablePre			= "ice_"
