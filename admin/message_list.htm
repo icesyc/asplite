@@ -37,10 +37,14 @@
 				<td>
 				[<a href="javascript:void(0)" onclick="$('#content{id}').toggle()">查看</a>]
 				[<a href="message.asp?act=delete&id={id}" onclick="return confirm('确实要删除吗？')">删除</a>]
+				[<a href="#" onclick="window.open('view/admin/restore.asp?id={id}&ti={title}','','width=335,height=250');">回复</a>]
 				</td>
 			</tr>
 			<tr class="hide" id="content{id}">
-				<td colspan="8"><textarea style="width:90%;height:100px;overflow:visible;border:0">{content}</textarea></td>
+					<td colspan="8"><textarea style="width:90%;height:100px;overflow:visible;border:0">上传时间:{created}  联系地址:{url}   邮   篇:{number}   公司全称:{corporation}  
+个人主页:{myweb}    
+内容:{content}
+回复:{restore}</textarea></td>
 			</tr>
 		<!-- END messageList -->
 			<tr>
