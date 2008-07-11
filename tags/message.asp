@@ -35,6 +35,24 @@ Sub save
 	End If
 End Sub
 
+'ÐÞ¸Ä
+Sub edit
+	If System.isPost Then
+		Set data = Collection(Request.Form)
+		If Not data.exists("id") Then 
+			data.add "id", request("id")
+		End If
+		
+		msg.update(data)
+		response.Write("window.opener=null;window.close()")
+		
+	Else
+		Set v = view("admin/setpwd.htm")
+		v.display
+		Set v = nothing
+	End If
+End Sub
+
 'É¾³ý
 Sub delete
 	Dim id
@@ -45,7 +63,7 @@ Sub delete
 	System.goBack
 End Sub
 
-Config.pageActList = "default,save,delete"
+Config.pageActList = "default,save,delete,edit"
 System.run
 Set msg = nothing
 Set System = Nothing

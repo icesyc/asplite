@@ -53,6 +53,7 @@ function showMenu(menuID,obj)
 		<li><a href="news.asp?act=save" target="main">添加新闻</a></li>
 		<li><a href="news.asp" target="main">新闻管理</a></li>
 		<li><a href="sort.asp?tbl=news" target="main">分类管理</a></li>
+		<li><a href="remark.asp?type=news" target="main">评论管理</a></li>
 	</ul>
 </div>
 <div class="menu">
@@ -63,6 +64,7 @@ function showMenu(menuID,obj)
 		<li><a href="product.asp?act=save" target="main">添加产品</a></li>
 		<li><a href="product.asp" target="main">产品管理</a></li>
 		<li><a href="sort.asp?tbl=product" target="main">产品分类管理</a></li>
+		<li><a href="remark.asp?type=pro" target="main">评论管理</a></li>
 	</ul>
 </div>
 <div class="menu">
@@ -75,6 +77,8 @@ function showMenu(menuID,obj)
 		<li><a href="page.asp" target="main">图文页面</a></li>
 		<li><a href="backup.asp" target="main">数据备份</a></li>
 		<li><a href="explorer.asp" target="main">资源管理器</a></li>
+		<li><a href="vod.asp" target="main">视频管理</a></li>
+		<li><a href="post.asp?id=2" target="main">公告管理</a></li>
 	</ul>
 </div>
 <div class="menu">

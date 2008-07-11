@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title> </title>
+<meta http-equiv="content-type" content="text/html;charset=GBK"/>
+<meta name="Author" content="ice_berg16(寻梦的稻草人)"/>
+<link rel="stylesheet" href="style/global.css" type="text/css"/>
+<script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript" src="javascript/jquery.util.js"></script>
+<script type="text/javascript" src="javascript/validator.js"></script>
+<style>
+.over{
+	background:#f6f6f6;
+}
+.r{
+	float:right;
+}
+</style>
+</head>
+<body>
+<div class="main-box">
+	<div class="head-dark-box">
+		资源管理器
+	</div>
+	<div class="body-box">
+		当前位置：{path}
+	<hr/>
+	<form method="post" action="vod.asp?act=upload" class="r" validate="true" enctype="multipart/form-data">
+		上传文件：<input type="file" name="file" rule="required" tip="请选择文件"/>
+		<input type="submit" value="上 传"/>
+		<input type="hidden" name="folder" value="{path}"/>
+	</form>
+  </div>
+	<div class="white-box">
+		<table class="list-table" cellspacing="0">
+			<tr class='head-light-box'>
+				<td>ID号</td>
+				<td>地址</td>
+				<td>操作</td>
+			</tr>
+		<!-- BEGIN vodlist -->
+			<tr onmouseover="this.className='over'" onmouseout="this.className=''">
+				<td><img src="images/icon/flv.gif" align="absmiddle"/> {id}</td>
+				<td>{url}</td>
+				<td>
+					[<a href="vod.asp?act=delete&f={id}" onclick="return confirm('确实要删除吗？')">删除</a>]				</td>
+			</tr>
+		<!-- END vodlist -->
+			<tr class="head-light-box">
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</body>
+</html>
