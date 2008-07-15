@@ -35,7 +35,7 @@ Class Template
 	' 加载模版文件
 	' @param file 模板路径
 	Public Sub setFile(file)
-		If dir = "" Then e "Template.setFile : 未指定模板目录"
+		If dir = "" Then e "Template.setFile : 未指定模板目录", true
 		template = readFile(dir & "/" & file)	
 	End Sub
 
