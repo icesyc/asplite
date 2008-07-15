@@ -80,8 +80,8 @@ Class Config_
 		defaultAction		= "default"
 		tablePre			= "ice_"
 		pageActList			= "default,save,delete"
-		pagerFormat			= "Pages: <span class=""red"">[current]</span>/<span class=""red"">[total]</span> "&_
-							  "Total: <span class=""red"">[recordCount]</span> "&_
+		pagerFormat			= "当前第: <span class=""red"">[current]</span>/<span class=""red"">[total]</span> 页"&_
+							  "共: <span class=""red"">[recordCount]</span> 条记录"&_
 							  "[prev]&lt;[/prev] "&_
 							  "[nav] "&_
 							  "[next]&gt;[/next]"
