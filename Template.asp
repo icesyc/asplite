@@ -129,19 +129,28 @@ Class Template
 			Set obj = getStackObj(k, stack, false)
 			'确保变量存在
 			If TypeName(obj) <> "Nothing" Then
-				'进行本层的替换
-				reg.Pattern = "\{([a-zA-Z0-9_.]+)\}"		
-				Set matches2 = reg.Execute(block)
 				If TypeName(obj) = "Dictionary" And obj.Count > 0 Then
 					If obj.exists(0) Then '二维集合
-						If TypeName(obj.Item(0)) = "Dictionary" Then						
+						If TypeName(obj.Item(0)) = "Dictionary" Then
+							'是否有嵌套标签，有的话先处理嵌套标签				
 							If blockReg.test(block) Then '递归处理
+								regexe = false
+								blockres = block
 								For Each k2 In obj
 									Set subobj = getStackObj(k2, obj, false)
-									block = parseBlock(block, subobj)
-									replacement = replacement & replaceMatch(block, obj.Item(k2), matches2)	
+									blockres = parseBlock(block, subobj)		
+									'确保表达式只执行一次
+									If regexe = false Then
+										regexe = true
+										reg.Pattern = "\{([a-zA-Z0-9_.]+)\}"		
+										Set matches2 = reg.Execute(blockres)
+									End If
+									replacement = replacement & replaceMatch(blockres, obj.Item(k2), matches2)	
 								Next 
-							Else							
+							Else
+								'进行本层的替换
+								reg.Pattern = "\{([a-zA-Z0-9_.]+)\}"		
+								Set matches2 = reg.Execute(block)		
 								For Each k2 In obj
 									replacement = replacement & replaceMatch(block, obj.Item(k2), matches2)	
 								Next 
