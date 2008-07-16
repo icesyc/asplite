@@ -25,10 +25,10 @@ tpl.assign "linkList", linkList
 tpl.assign "pager", p.makePage()
 tpl.display
 
-
 Set n = Nothing
-Set p = Nothing
+Set l = Nothing
 Set newsList = nothing
+Set linkList = nothing
 Set tpl = Nothing
 Set System = nothing
 %>

@@ -28,6 +28,7 @@ End Sub
 'Ìí¼Ó
 Sub save
 	If System.isPost Then
+	set fb = Collection(Request.Form)
 		sort.save(Collection(Request.Form))
 		System.goBack
 	End If

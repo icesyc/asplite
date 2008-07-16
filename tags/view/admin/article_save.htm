@@ -53,7 +53,7 @@ div#editor {
 		<label for="is_pic">启用缩略图</label>
 		<label id="thumbButton" class="hide">
 		<input type="text" name="thumbnail" class="textbox" size="50" readonly="readonly" value="{thumbnail}"/>
-		<input type="button" class="button" value="选择图片" onclick="selectImage()"/>
+		<input type="button" class="button" value="选择图片" onclick="selectImage('thumbnail')"/>
 		</label>
 	</div>
 	<div class="with-line hide" id="thumbArea">
@@ -74,9 +74,12 @@ div#editor {
 <script type="text/javascript">
 var is_pic = "{is_pic}";
 var is_recmd = "{is_recmd}";
+var fieldname;
+
 document.saveForm.sort_id.value = "{sort_id}";
 document.saveForm.is_recmd.checked = is_recmd == "1";
 document.saveForm.is_pic.checked =  is_pic == "1";
+
 //有缩图
 if(document.saveForm.is_pic.checked)
 {
@@ -87,7 +90,7 @@ if(document.saveForm.is_pic.checked)
 //选择图片的回调函数
 function SetUrl(url)
 {
-	document.saveForm.thumbnail.value = url;
+	document.saveForm[fieldname].value = url;
 	document.getElementById('thumbPreview').src = url;
 }
 
@@ -100,8 +103,11 @@ function showThumbArea(check){
 }
 
 //选择缩略图
-function selectImage()
+function selectImage(field)
 {
+//上传图片
+	fieldname = field;
+
 	oEditor = document.getElementById('content___Frame').contentWindow;
 	OpenFileBrowser(oEditor.FCKConfig.ImageBrowserURL,
 		oEditor.FCKConfig.ImageBrowserWindowWidth,

@@ -86,23 +86,12 @@ Sub delete
 	End If 
 End Sub
 
-Sub deleteFolder
-	f = request.querystring("f")
-	If Left(f,Len(rootFolder)) <> rootFolder Then message "这个路径不能访问", "error"
-	folder = server.mapPath(f)
-	If fso.folderExists(folder) Then
-		fso.deleteFolder(folder)
-		System.goBack
-	Else
-		message "对不起，这个文件夹不存在", "error"
-	End If 
-End Sub
 
 
 '上传文件
 Sub upload
 	Dim allowExt
-	allowExt = "7z|aiff|asf|avi|bmp|csv|doc|fla|flv|gif|gz|gzip|jpeg|jpg|mid|mov|mp3|mp4|mpc|mpeg|mpg|ods|odt|pdf|png|ppt|pxd|qt|ram|rar|rm|rmi|rmvb|rtf|sdc|sitd|swf|sxc|sxw|tar|tgz|tif|tiff|txt|vsd|wav|wma|wmv|xls|xml|zip"
+	allowExt = "flv"
 	allowExt = Split(allowExt, "|")
 	Set uploader = new FileUploader
 	folder =  uploader.Form("folder")&"/vod"
@@ -119,6 +108,8 @@ Sub upload
 		m.create(vod)
 
 	uploader.saveToFile "file", realPath
+	Set m = Nothing
+	Set vod = Nothing
 	Set uploader = Nothing
 	Set f = Nothing
 	System.goBack

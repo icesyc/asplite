@@ -9,15 +9,13 @@ r.PK    = "id"
 
 'ап╠М
 Sub default
-page = getInt(Request.Querystring("page"))
-If page <= 0 Then page = 1
-limit = 10
-If sort_id = 0 Then sort_id = 2
-where = "type='"&request("type")&"'"
-Set rlist = r.findAll(where,"*", "id desc", page, limit)
-Set p = pager(page, r.findCount("type='news'"), limit)
-	
-	
+	page = getInt(Request.Querystring("page"))
+	If page <= 0 Then page = 1
+	limit = 10
+	If sort_id = 0 Then sort_id = 2
+	where = "type='"&request("type")&"'"
+	Set rlist = r.findAll(where,"*", "id desc", page, limit)
+	Set p = pager(page, r.findCount(where), limit)
 	Set v = view("admin/remark.htm")
 	v.assign "rlist", rlist
 	v.assign "ti",request("ti")
@@ -42,7 +40,7 @@ End Sub
 
 Config.pageActList = "default,save,delete"
 System.run
-Set msg = nothing
+Set r = nothing
 Set System = Nothing
 %>
 

@@ -18,6 +18,8 @@ tpl.assign "nList", nList
 tpl.display
 
 Set n = Nothing
+Set l = Nothing
+Set nList = Nothing
 Set record = Nothing
 Set tpl = Nothing
 Set System = nothing
