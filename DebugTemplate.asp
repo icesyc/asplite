@@ -130,12 +130,16 @@ Class DebugTemplate
 			parseBlock = ""
 			Exit Function
 		End If
-		
+
 		'循环查找标签
-		reg.Pattern = "<!-- BEGIN ([a-zA-Z0-9_.]+) -->([\s\S]*?)<!-- END \1 -->"
-		
-		Dim matches,match,k,k2,block,replacement,obj,matches2
-		Set matches = reg.Execute(tpl)
+		Dim matches,match,k,k2,block,replacement,obj,subobj,matches2,blockReg
+		Set blockReg = new RegExp
+		blockReg.Pattern = "<!-- BEGIN ([a-zA-Z0-9_.]+) -->([\s\S]*?)<!-- END \1 -->"
+		blockReg.IgnoreCase = True
+		blockReg.Global     = True
+
+		Set matches = blockReg.Execute(tpl)
+
 		For Each match In matches
 			k =  match.subMatches(0)
 			block = match.subMatches(1)
@@ -147,30 +151,37 @@ Class DebugTemplate
 			Set obj = getStackObj(k, stack, false)
 			'确保变量存在
 			If TypeName(obj) <> "Nothing" Then 		
-				If reg.test(block) Then 		
-					'递归处理
-					If debug = True Then 
-						e "递归开始:", False
-						dump block
-					End If 
-					block = parseBlock(block, obj)
-					If debug = True Then 
-						e "递归结束:", False
-						dump block
-					End If
-				End If
 				'进行本层的替换
 				reg.Pattern = "\{([a-zA-Z0-9_.]+)\}"		
 				Set matches2 = reg.Execute(block)
 				If TypeName(obj) = "Dictionary" And obj.Count > 0 Then
 					If obj.exists(0) Then '二维集合
-						If TypeName(obj.Item(0)) = "Dictionary" Then
-							For Each k2 In obj
-								replacement = replacement & replaceMatch(block, obj.Item(k2), matches2)	
-							Next 
+						If TypeName(obj.Item(0)) = "Dictionary" Then						
+							If blockReg.test(block) Then 
+								For Each k2 In obj
+									'递归处理
+									If debug = True Then 
+										e "递归开始:", False
+										dump block
+									End If 
+									Set subobj = getStackObj(k2, obj, false)
+									block = parseBlock(block, subobj)
+									If debug = True Then 
+										e "递归结束:", False
+										dump block
+									End If
+									replacement = replacement & replaceMatch(block, obj.Item(k2), matches2)			
+								Next
+							Else								
+								For Each k2 In obj
+									replacement = replacement & replaceMatch(block, obj.Item(k2), matches2)	
+								Next 
+							End If
 						End If
 					Else '一维集合
-						replacement = replaceMatch(block, obj, matches2)
+						For Each k2 In obj
+							replacement = replacement & Replace(Replace(block, "{key}", k2), "{value}", obj.Item(k2))
+						Next
 					End If
 				End If
 				res = Replace(res, match.value, replacement)
