@@ -11,7 +11,7 @@ End Sub
 Sub login
 	If System.isPost Then
 		Dim user,pwd,msg,admin,v
-		user = Request.Form("user_name")
+		user = Replace(Replace(Request.Form("user_name"), "'", ""), """", "")
 		pwd  = Request.Form("password")
 		code = Request.Form("imgcode")
 		If code <> Trim(Session("imageCode")) Then 
