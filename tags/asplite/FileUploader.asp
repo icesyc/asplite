@@ -229,11 +229,10 @@ Private Function SaveToFileEx(Item,Path,Over)
 		oFileStream.Open
 		oUpFileStream.Position = File(Item).FileStart
 		oUpFileStream.CopyTo oFileStream,File(Item).FileSize
-		tmpPath=Split(Path,".")(0)
 		FileExt=GetFileExt(Path)
 		if Over then
 			if isAllowExt(FileExt) then
-				oFileStream.SaveToFile tmpPath & "." & FileExt,2
+				oFileStream.SaveToFile Path,2
 				if Err.number<>0 then OutErr("保存文件时出错,请检查路径,是否存在该上传目录!该文件保存路径为" & tmpPath & "." & FileExt)
 			Else
 				isErr_=3
