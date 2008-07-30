@@ -44,7 +44,7 @@ Sub edit
 		End If
 		
 		msg.update(data)
-		response.Write("window.opener=null;window.close()")
+		response.Write("<script>window.opener=null;window.close();</script>")
 		
 	Else
 		Set v = view("admin/setpwd.htm")
