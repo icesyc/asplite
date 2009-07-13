@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>新网工程后台管理程序</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<link rel="stylesheet" href="style/global.css" type="text/css"/>
+
+<style>
+form label.field{
+	width:15%;
+}
+input {
+	font-family:Verdana;
+}
+</style>
+
+<script language="javascript">
+ function login_if(){
+  var obj = document.login_form;
+  if (obj.uid.value=="")
+  {
+	alert('请输入用户名！');
+	obj.uid.focus()
+	return false;
+  }
+  if (obj.pwd.value=="")
+  {
+	alert('请输入密码！');
+	obj.pwd.focus()
+	return false;
+  } 
+ }
+
+</script>
+
+</head>
+<body class="center">
+<div id="login-box">
+<div class="main-box">
+	<div class="head-dark-box">
+		新网工程后台管理程序-管理员登录
+	</div>
+	<div class="hide"></div>
+	<form method="post" action="login.php" id="login-form" name="login_form" onsubmit="return login_if()">	
+		<div>
+			<label class="field">用户名</label>
+			<input type="text" size="20" class="fixwidth" name="uid"/>
+		</div>
+		<div>
+			<label class="field">密　码</label>
+			<input type="password" size="20" class="fixwidth" name="pwd"/>
+		</div>
+		<div>
+			<label class="field">验证码</label>
+			<input type="text" size="20" class="fixwidth" name="key"/>
+		</div>
+		<div>
+			<label class="field"></label>
+			<input type="submit" class="button" value="登录系统"/>
+			<input type="hidden" name="act" value="login"/>
+		</div>
+	</form>
+</div>
+</div>
+</body>
+</html>
